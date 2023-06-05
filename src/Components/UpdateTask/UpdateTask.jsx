@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import { useLoaderData } from "react-router-dom";
 import CreatableSelect from "react-select/creatable";
 import Swal from "sweetalert2";
-import "./AddTask.css"
-const AddTask = () => {
+
+const UpdateTask = () => {
+  const theLoadedTask = useLoaderData();
+
   const [taskTitle, setTaskTitle] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
   const [taskStatus, setTaskStatus] = useState(null);
@@ -44,8 +47,8 @@ const AddTask = () => {
         console.log(data);
         if (data.insertedId) {
           Swal.fire({
-            title: "Great!",
-            text: "Task Added",
+            title: "Success!",
+            text: "Task Updated",
             icon: "success",
             confirmButtonText: "Cool",
           });
@@ -73,8 +76,8 @@ const AddTask = () => {
               id="title"
               className="border border-gray-400 p-2 w-full"
               name="title"
-              placeholder="Task Title"
-              value={taskTitle}
+              defaultValue={theLoadedTask?.title}
+            
               onChange={(e) => setTaskTitle(e.target.value)}
               required
             />
@@ -90,8 +93,8 @@ const AddTask = () => {
               id="description"
               className="border border-gray-400 p-2 w-full"
               name="description"
-              placeholder="Task Description"
-              value={taskDescription}
+              defaultValue={theLoadedTask?.description}
+            
               onChange={(e) => setTaskDescription(e.target.value)}
               required
             />
@@ -111,7 +114,7 @@ const AddTask = () => {
               className="border border-gray-400 p-2 w-full"
               name="status"
               placeholder="Status"
-              value={taskStatus}
+              defaultValue={theLoadedTask?.status}
               options={options}
               onChange={handleStatusChange}
             />
@@ -129,7 +132,7 @@ const AddTask = () => {
               className="border border-gray-400 p-2 w-full"
               name="date"
               placeholder="Date"
-              value={taskDate}
+              defaultValue={theLoadedTask?.date}
               onChange={(e) => setTaskDate(e.target.value)}
               required
             />
@@ -147,4 +150,4 @@ const AddTask = () => {
   );
 };
 
-export default AddTask;
+export default UpdateTask;

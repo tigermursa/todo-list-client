@@ -7,6 +7,7 @@ import Layout from "./Components/Layout/Layout.jsx";
 import Home from "./Components/Home/Home.jsx";
 import AddTask from "./Components/AddTask/AddTask.jsx";
 import MyTask from "./Components/MyTask/MyTask.jsx";
+import UpdateTask from "./Components/UpdateTask/UpdateTask.jsx";
 
 const router = createBrowserRouter([
   {
@@ -24,7 +25,12 @@ const router = createBrowserRouter([
       {
         path: "/mytask",
         element: <MyTask></MyTask>,
-       
+      },
+      {
+        path: "/update/:id",
+        element: <UpdateTask></UpdateTask>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/task/${params.id}`),
       },
     ],
   },
