@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 const NavigationBar = () => {
   return (
@@ -27,35 +28,37 @@ const NavigationBar = () => {
               className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
-                <a>Home</a>
+                <NavLink to="/">Home</NavLink>
               </li>
               <li>
-                <a>My Task</a>
+                <NavLink to="/mytask">My Task</NavLink>
               </li>
-
               <li>
-                <a>Add Task</a>
+                <NavLink to="/addtask">Add Task</NavLink>
               </li>
             </ul>
           </div>
-          <a className="btn btn-ghost normal-case text-xl">TO-DO-LIST</a>
+          <NavLink to="/" className="btn btn-ghost normal-case text-xl">
+            TO-DO-LIST
+          </NavLink>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
             <li>
-              <a>Home</a>
+              <NavLink to="/">Home</NavLink>
             </li>
             <li>
-              <a>My Task</a>
+              <NavLink to="/mytask">My Task</NavLink>
             </li>
-
             <li>
-              <a>Add Task</a>
+              <NavLink to="/addtask">Add Task</NavLink>
             </li>
           </ul>
         </div>
         <div className="navbar-end hidden">
-          <a className="btn">Button</a>
+          <NavLink to="/button" className="btn">
+            Button
+          </NavLink>
         </div>
       </div>
     </div>
