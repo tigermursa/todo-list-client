@@ -35,7 +35,8 @@ const UpdateTask = () => {
     setTaskStatus(null);
     setTaskDate("");
 
-    fetch("http://localhost:3000/task", {
+    // Send updated task data to the server
+    fetch("https://todo-server-neon.vercel.app/task", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -46,6 +47,7 @@ const UpdateTask = () => {
       .then((data) => {
         console.log(data);
         if (data.insertedId) {
+          // Show success message using Swal
           Swal.fire({
             title: "Success!",
             text: "Task Updated",
@@ -77,7 +79,6 @@ const UpdateTask = () => {
               className="border border-gray-400 p-2 w-full"
               name="title"
               defaultValue={theLoadedTask?.title}
-            
               onChange={(e) => setTaskTitle(e.target.value)}
               required
             />
@@ -94,7 +95,6 @@ const UpdateTask = () => {
               className="border border-gray-400 p-2 w-full"
               name="description"
               defaultValue={theLoadedTask?.description}
-            
               onChange={(e) => setTaskDescription(e.target.value)}
               required
             />

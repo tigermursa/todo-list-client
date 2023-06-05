@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import CreatableSelect from "react-select/creatable";
 import Swal from "sweetalert2";
-import "./AddTask.css"
+import "./AddTask.css";
+
 const AddTask = () => {
   const [taskTitle, setTaskTitle] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
   const [taskStatus, setTaskStatus] = useState(null);
   const [taskDate, setTaskDate] = useState("");
+  const [errors, setErrors] = useState({});
 
   const options = [
     { value: "completed", label: "Completed" },
@@ -20,19 +22,45 @@ const AddTask = () => {
     const description = form.description.value;
     const status = taskStatus ? taskStatus.value : "";
     const date = form.date.value;
+
+    const newErrors = {};
+
+    if (title.trim() === "") {
+      newErrors.title = "Please enter a title.";
+    }
+
+    if (description.trim() === "") {
+      newErrors.description = "Please enter a description.";
+    }
+
+    if (!taskStatus) {
+      newErrors.status = "Please select a status.";
+    }
+
+    if (date.trim() === "") {
+      newErrors.date = "Please enter a date.";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
     const user = {
       title,
       description,
       status,
       date,
     };
+
     form.reset();
     setTaskTitle("");
     setTaskDescription("");
     setTaskStatus(null);
     setTaskDate("");
+    setErrors({});
 
-    fetch("http://localhost:3000/task", {
+    fetch("https://todo-server-neon.vercel.app/task", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -71,13 +99,18 @@ const AddTask = () => {
             <input
               type="text"
               id="title"
-              className="border border-gray-400 p-2 w-full"
+              className={`border border-gray-400 p-2 w-full ${
+                errors.title ? "border-red-500" : ""
+              }`}
               name="title"
               placeholder="Task Title"
               value={taskTitle}
               onChange={(e) => setTaskTitle(e.target.value)}
-              required
+             
             />
+            {errors.title && (
+              <p className="text-red-500 text-sm">{errors.title}</p>
+            )}
           </div>
           <div className="mb-4 w-80">
             <label
@@ -88,13 +121,18 @@ const AddTask = () => {
             </label>
             <textarea
               id="description"
-              className="border border-gray-400 p-2 w-full"
+              className={`border border-gray-400 p-2 w-full ${
+                errors.description ? "border-red-500" : ""
+              }`}
               name="description"
               placeholder="Task Description"
               value={taskDescription}
               onChange={(e) => setTaskDescription(e.target.value)}
-              required
+            
             />
+            {errors.description && (
+              <p className="text-red-500 text-sm">{errors.description}</p>
+            )}
           </div>
         </div>
 
@@ -108,13 +146,18 @@ const AddTask = () => {
             </label>
             <CreatableSelect
               id="status"
-              className="border border-gray-400 p-2 w-full"
+              className={`border border-gray-400 p-2 w-full ${
+                errors.status ? "border-red-500" : ""
+              }`}
               name="status"
               placeholder="Status"
               value={taskStatus}
               options={options}
               onChange={handleStatusChange}
             />
+            {errors.status && (
+              <p className="text-red-500 text-sm">{errors.status}</p>
+            )}
           </div>
           <div className="mb-4">
             <label
@@ -126,13 +169,18 @@ const AddTask = () => {
             <input
               type="date"
               id="date"
-              className="border border-gray-400 p-2 w-full"
+              className={`border border-gray-400 p-2 w-full ${
+                errors.date ? "border-red-500" : ""
+              }`}
               name="date"
               placeholder="Date"
               value={taskDate}
               onChange={(e) => setTaskDate(e.target.value)}
-              required
+           
             />
+            {errors.date && (
+              <p className="text-red-500 text-sm">{errors.date}</p>
+            )}
           </div>
         </div>
 

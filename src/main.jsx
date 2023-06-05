@@ -30,7 +30,7 @@ const router = createBrowserRouter([
         path: "/update/:id",
         element: <UpdateTask></UpdateTask>,
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/task/${params.id}`),
+          fetch(`https://todo-server-neon.vercel.app/task/${params.id}`),
       },
     ],
   },
