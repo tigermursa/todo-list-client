@@ -17,4 +17,4 @@ This is a simple Todo List application created using React, Node.js, Express, Mo
 - Express
 - MongoDB
 - Tailwind CSS
-Live url link : https://647e3706d683800f4e9b559f--reliable-tulumba-a9cffd.netlify.app/mytask
+Live url link : https://647e3706d683800f4e9b559f--reliable-tulumba-a9cffd.netlify.app/
