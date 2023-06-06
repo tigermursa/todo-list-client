@@ -1,53 +1,36 @@
-import React, { useState } from "react";
+import React, { useRef } from "react";
 import { useLoaderData } from "react-router-dom";
-import CreatableSelect from "react-select/creatable";
 import Swal from "sweetalert2";
 
 const UpdateTask = () => {
   const theLoadedTask = useLoaderData();
-
-  const [taskTitle, setTaskTitle] = useState("");
-  const [taskDescription, setTaskDescription] = useState("");
-  const [taskStatus, setTaskStatus] = useState(null);
-  const [taskDate, setTaskDate] = useState("");
-
-  const options = [
-    { value: "completed", label: "Completed" },
-    { value: "pending", label: "Pending" },
-  ];
+  const formRef = useRef(null);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const form = event.target;
+    const form = formRef.current;
     const title = form.title.value;
     const description = form.description.value;
-    const status = taskStatus ? taskStatus.value : "";
+    const status = form.status.value;
     const date = form.date.value;
-    const user = {
+    const user= {
       title,
       description,
       status,
       date,
     };
     form.reset();
-    setTaskTitle("");
-    setTaskDescription("");
-    setTaskStatus(null);
-    setTaskDate("");
-
-    // Send updated task data to the server
-    fetch("https://todo-server-neon.vercel.app/task", {
-      method: "POST",
+    fetch(`https://todo-server-neon.vercel.app/task/${theLoadedTask._id}`, {
+      method: "PUT",
       headers: {
-        "content-type": "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(user),
     })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        if (data.insertedId) {
-          // Show success message using Swal
+        if (data.modifiedCount > 0) {
           Swal.fire({
             title: "Success!",
             text: "Task Updated",
@@ -55,17 +38,22 @@ const UpdateTask = () => {
             confirmButtonText: "Cool",
           });
         }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        Swal.fire({
+          title: "Error!",
+          text: "An error occurred. Please try again.",
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
       });
-  };
-
-  const handleStatusChange = (newValue) => {
-    setTaskStatus(newValue);
   };
 
   return (
     <div className="addTask">
-      <form onSubmit={handleSubmit}>
-        <div className=" flex justify-center items-center flex-col mt-10 ">
+      <form ref={formRef} onSubmit={handleSubmit}>
+        <div className="flex justify-center items-center flex-col mt-10">
           <div className="mb-4 w-80">
             <label
               htmlFor="title"
@@ -79,7 +67,6 @@ const UpdateTask = () => {
               className="border border-gray-400 p-2 w-full"
               name="title"
               defaultValue={theLoadedTask?.title}
-              onChange={(e) => setTaskTitle(e.target.value)}
               required
             />
           </div>
@@ -95,7 +82,6 @@ const UpdateTask = () => {
               className="border border-gray-400 p-2 w-full"
               name="description"
               defaultValue={theLoadedTask?.description}
-              onChange={(e) => setTaskDescription(e.target.value)}
               required
             />
           </div>
@@ -109,14 +95,13 @@ const UpdateTask = () => {
             >
               Status
             </label>
-            <CreatableSelect
+            <input
+              type="text"
               id="status"
               className="border border-gray-400 p-2 w-full"
               name="status"
-              placeholder="Status"
               defaultValue={theLoadedTask?.status}
-              options={options}
-              onChange={handleStatusChange}
+              required
             />
           </div>
           <div className="mb-4">
@@ -131,9 +116,7 @@ const UpdateTask = () => {
               id="date"
               className="border border-gray-400 p-2 w-full"
               name="date"
-              placeholder="Date"
               defaultValue={theLoadedTask?.date}
-              onChange={(e) => setTaskDate(e.target.value)}
               required
             />
           </div>
@@ -143,7 +126,7 @@ const UpdateTask = () => {
           type="submit"
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 mb-10"
         >
-          Add Task
+          Update Task
         </button>
       </form>
     </div>
