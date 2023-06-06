@@ -60,7 +60,7 @@ const AddTask = () => {
     setTaskDate("");
     setErrors({});
 
-    fetch("https://todo-server-neon.vercel.app/task", {
+    fetch("https://todo-server-tigermursa.vercel.app/task", {
       method: "POST",
       headers: {
         "content-type": "application/json",

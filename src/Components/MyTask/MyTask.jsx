@@ -13,7 +13,7 @@ const MyTask = () => {
 
   useEffect(() => {
     // Fetch task data from the server
-    fetch("https://todo-server-neon.vercel.app/task")
+    fetch("https://todo-server-tigermursa.vercel.app/task")
       .then((response) => response.json())
       .then((data) => {
         setTaskData(data);
@@ -34,7 +34,7 @@ const MyTask = () => {
 
   const updateStatus = (id, newStatus) => {
     // Update task status on the server
-    fetch(`https://todo-server-neon.vercel.app/task/${id}`, {
+    fetch(`https://todo-server-tigermursa.vercel.app/task/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -92,7 +92,7 @@ const MyTask = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         // Delete the task on the server
-        fetch(`https://todo-server-neon.vercel.app/task/${id}`, {
+        fetch(`https://todo-server-tigermursa.vercel.app/task/${id}`, {
           method: "DELETE",
         })
           .then((response) => response.json())
@@ -128,15 +128,15 @@ const MyTask = () => {
 
   return (
     <div>
-      <div className="flex justify-center gap-10 mb-4">
+      <div className="flex justify-center gap-10 mb-4 ">
         <div>Pending Tasks: {pendingTasks}</div>
         <div>Completed Tasks: {completedTasks}</div>
       </div>
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-3 ">
         {taskData.map((task) => (
           <div key={task._id} className="border rounded-md p-4">
-            <h2 className="text-center text-xl font-bold mb-2">
-              {task.title}{" "}
+            <h2 className="text-center text-xl font-bold mb-2 p-2">
+              {" "}
               {task.status === "pending" ? (
                 // Mark red for pending tasks
                 <span className="inline-block h-2 w-2 rounded-full bg-red-500 mr-2"></span>
@@ -144,10 +144,11 @@ const MyTask = () => {
                 // Mark green for completed tasks
                 <span className="inline-block h-2 w-2 rounded-full bg-green-500 mr-2"></span>
               )}
+              {task.title}{" "}
             </h2>
-            <p className="mb-2 text-justify p-1">{task.description}</p>
+            <p className="mb-2 text-justify p-2">{task.description}</p>
             <div className="flex items-center mb-2">
-              <span className="flex-grow">Status: {task.status}</span>
+              <span className="flex-grow font-semibold">Status: {task.status}</span>
             </div>
             <p>Date: {task.date}</p>
             <div className="flex justify-center items-center mt-5">

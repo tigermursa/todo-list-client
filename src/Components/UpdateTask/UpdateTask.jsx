@@ -13,20 +13,23 @@ const UpdateTask = () => {
     const description = form.description.value;
     const status = form.status.value;
     const date = form.date.value;
-    const user= {
+    const user = {
       title,
       description,
       status,
       date,
     };
     form.reset();
-    fetch(`https://todo-server-neon.vercel.app/task/${theLoadedTask._id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    })
+    fetch(
+      `https://todo-server-tigermursa.vercel.app/task/${theLoadedTask._id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
