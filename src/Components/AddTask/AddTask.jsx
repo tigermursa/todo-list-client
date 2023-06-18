@@ -73,9 +73,9 @@ const AddTask = () => {
         if (data.insertedId) {
           Swal.fire({
             title: "Great!",
-            text: "Task Added",
+            text: "Your Task Added",
             icon: "success",
-            confirmButtonText: "Cool",
+            confirmButtonText: "ok",
           });
         }
       });
@@ -106,7 +106,6 @@ const AddTask = () => {
               placeholder="Task Title"
               value={taskTitle}
               onChange={(e) => setTaskTitle(e.target.value)}
-             
             />
             {errors.title && (
               <p className="text-red-500 text-sm">{errors.title}</p>
@@ -128,7 +127,6 @@ const AddTask = () => {
               placeholder="Task Description"
               value={taskDescription}
               onChange={(e) => setTaskDescription(e.target.value)}
-            
             />
             {errors.description && (
               <p className="text-red-500 text-sm">{errors.description}</p>
@@ -151,7 +149,7 @@ const AddTask = () => {
               }`}
               name="status"
               placeholder="Status"
-              value={taskStatus}
+              defaultValue={"Pending"}
               options={options}
               onChange={handleStatusChange}
             />
@@ -176,7 +174,6 @@ const AddTask = () => {
               placeholder="Date"
               value={taskDate}
               onChange={(e) => setTaskDate(e.target.value)}
-           
             />
             {errors.date && (
               <p className="text-red-500 text-sm">{errors.date}</p>

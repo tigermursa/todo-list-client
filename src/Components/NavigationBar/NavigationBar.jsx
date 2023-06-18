@@ -38,7 +38,7 @@ const NavigationBar = () => {
               </li>
             </ul>
           </div>
-          <NavLink to="/" className="btn btn-ghost normal-case text-xl">
+          <NavLink to="/" className="btn btn-ghost normal-case text-4xl md:text-5xl font-bold">
             TO-DO-LIST
           </NavLink>
         </div>
